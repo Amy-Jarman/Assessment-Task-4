@@ -13,7 +13,7 @@ try:
     if connection.is_connected():
         cursor = connection.cursor(prepared=True)
         
-        # SQL query with placeholders for data input
+        # Prepared statement with placeholders for data input
         sql_insert_query = """INSERT INTO users (username, email) VALUES (%s, %s)"""
         
         # Data to be inserted
