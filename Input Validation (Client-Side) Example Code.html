@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Input Validation</title>
+<style>
+    .error {
+        color: red;
+    }
+</style>
+</head>
+<body>
+<form id="myForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required> <!-- Field is 'required' --> 
+    <span class="error" id="nameError"></span>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>  <!-- Field is 'required' -->
+    <span class="error" id="emailError"></span>
+    <br>
+    
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>  <!-- Field is 'required' -->
+    <span class="error" id="dobError"></span>
+    <br>
+    
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+document.getElementById('myForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Clearing error messages
+    document.getElementById('nameError').textContent = '';
+    document.getElementById('emailError').textContent = '';
+    document.getElementById('dobError').textContent = '';
+
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var dob = document.getElementById('dob').value;
+
+    // Validate name
+    if (name.trim() === '') {
+        document.getElementById('nameError').textContent = 'Name is required';
+        return;
+    } 
+    
+    if (!validateName(name)) {
+        document.getElementById('nameError').textContent = 'Name must only contain letters and spaces';
+        return;
+    }
+
+    // Validate email
+    if (!validateEmail(email)) {
+        document.getElementById('emailError').textContent = 'Invalid Email Address';
+        return;
+    }
+
+    // Validate date of birth
+    if (new Date(dob) >= new Date()) {
+        document.getElementById('dobError').textContent = 'Date of Birth must be a past date';
+        return;
+    }
+
+    // If all validations are passed
+    alert('Form Submitted Successfully!');
+});
+
+function validateName(name) {
+    var re = /^[a-zA-Z\s]+$/; // Ensures name only uses letters and spaces
+    return re.test(name);
+}
+
+function validateEmail(email) {
+    var re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; // Ensures email only uses @ and standard email format
+    return re.test(email);
+}
+</script>
+</body>
+</html>
